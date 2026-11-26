@@ -76,6 +76,7 @@ export const videoSeasonBatchInput: DownloadVideoInput = {
         logError(`获取视频合集列表失败, message = ${json.message}`)
         return []
       }
+      const collectionTitle = lodash.get(json, 'data.View.ugc_season.title')
       const owner = lodash.get(json, 'data.View.owner', {})
       const sections: { title?: string; episodes?: any[] }[] = lodash.get(
         json,
@@ -97,15 +98,18 @@ export const videoSeasonBatchInput: DownloadVideoInput = {
         return section.episodes.map(episode => {
           page += 1
           const date = getTitleVariablesFromDate(new Date(episode.arc.pubdate * 1000))
+          const episodeOwner = episode.arc.author ?? owner
           const variables = getTitleVariables(false, {
+            collection: collectionTitle,
+            section: section.title,
             n: formatNumber(page, totalEpisodesLength),
             title: episode.page.part,
             cid: episode.cid,
             aid: episode.aid,
             bvid: episode.bvid,
             ep: episode.title,
-            user: owner.name,
-            userID: owner.mid?.toString(),
+            user: episodeOwner.name,
+            userID: episodeOwner.mid?.toString(),
             publishYear: date.year,
             publishMonth: date.month,
             publishDay: date.day,

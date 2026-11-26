@@ -134,22 +134,6 @@ const parseRpcOptions = (option: string): Record<string, string> => {
   return Object.fromEntries(pairs)
 }
 const windowsAbsolutePath = /^(?:[a-z]:[\\/]|\\\\)/i
-const aria2PathVariables = new Set([
-  'title',
-  'ep',
-  'user',
-  'userID',
-  'aid',
-  'bvid',
-  'cid',
-  'n',
-  'publishYear',
-  'publishMonth',
-  'publishDay',
-  'y',
-  'M',
-  'd',
-])
 export const aria2Rpc: DownloadVideoOutput = {
   name: 'aria2Rpc',
   displayName: 'aria2 RPC',
@@ -198,17 +182,12 @@ export const aria2Rpc: DownloadVideoOutput = {
       if (!hasVariables) {
         return fixedDirectory
       }
-      const inputVariables = {
-        ...(input.variables ?? {
-          aid: String(input.aid),
-          cid: String(input.cid),
-          bvid: input.bvid,
-          title: input.title,
-        }),
+      const variables = input.variables ?? {
+        aid: String(input.aid),
+        cid: String(input.cid),
+        bvid: input.bvid,
+        title: input.title,
       }
-      const variables = Object.fromEntries(
-        Object.entries(inputVariables).filter(([name]) => aria2PathVariables.has(name)),
-      )
       const formatted = directory
         .split(/([\\/])/)
         .map(part => {
