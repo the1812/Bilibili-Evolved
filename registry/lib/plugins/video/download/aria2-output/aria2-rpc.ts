@@ -67,8 +67,10 @@ const handleRpcResponse = async (
 const getRpc = async (profile: Aria2RpcProfile, rpcParam: RpcParam) => {
   const { option, host, methodName } = getOption(profile)
   return handleRpcResponse(rpcParam, async () => {
-    const base64Params = window.btoa(unescape(encodeURIComponent(JSON.stringify(rpcParam.params))))
-    const url = `${host}:${option.port}/jsonrpc?method=${methodName}&id=${rpcParam.id}&params=${base64Params}`
+    const bytes = new TextEncoder().encode(JSON.stringify(rpcParam.params))
+    const binary = Array.from(bytes, byte => String.fromCharCode(byte)).join('')
+    const params = encodeURIComponent(window.btoa(binary))
+    const url = `${host}:${option.port}/jsonrpc?method=${methodName}&id=${rpcParam.id}&params=${params}`
     console.log(`RPC request: ${url}`)
     if (url.startsWith('http:')) {
       return monkey({
