@@ -162,8 +162,7 @@ export const aria2Rpc: DownloadVideoOutput = {
           if (!part.includes('[')) {
             return part
           }
-          const value = formatVariables(part, variables).replace(/[. ]+$/, '')
-          return /^(con|prn|aux|nul|com[1-9]|lpt[1-9])(?:\..*)?$/i.test(value) ? `_${value}` : value
+          return formatVariables(part, variables).replace(/[. ]+$/, '')
         })
         .join('')
       return formatted || undefined
