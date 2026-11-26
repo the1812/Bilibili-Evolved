@@ -46,7 +46,7 @@
       </div>
       <div class="profile-dir">
         <div class="profile-item-name">路径:</div>
-        <TextBox
+        <TextArea
           v-model="selectedRpcProfile.dir"
           placeholder="路径变量规则可在插件详情中查看"
           change-on-blur
@@ -178,6 +178,10 @@ const deleteProfile = () => {
   }
   .profile-item-name {
     margin-right: 8px;
+  }
+  .profile-dir textarea {
+    resize: vertical;
+    min-height: 14px;
   }
   .profile-other .profile-item-name {
     align-self: flex-start;

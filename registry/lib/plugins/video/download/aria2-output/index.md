@@ -8,8 +8,8 @@
 
 #### 常用路径示例:
 
-单个/多 P 视频: `[user]/[title]/[n - ][ep]`
+单个(多 P)视频: `[user]/[title]/[n - ][ep]`
 
 合集: `[collection]/[section]/[n - ][ep]`
 
-番剧多 P: `[title]/[n - ][ep]`
+番剧: `[title]/[n - ][ep]`
