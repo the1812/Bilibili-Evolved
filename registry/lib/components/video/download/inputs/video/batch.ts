@@ -2,7 +2,7 @@ import { getJsonWithCredentials } from '@/core/ajax'
 import { getGeneralSettings } from '@/core/settings'
 import { formatDuration, formatNumber } from '@/core/utils/formatters'
 import { logError } from '@/core/utils/log'
-import { formatTitle, getTitleVariablesFromDate } from '@/core/utils/title'
+import { formatVariables, getTitleVariables, getTitleVariablesFromDate } from '@/core/utils/title'
 import { videoUrls } from '@/core/utils/urls'
 import { DownloadVideoInput } from '../../types'
 import { createEpisodesPicker, EpisodeItem } from '../episode-item'
@@ -31,6 +31,20 @@ export const videoBatchInput: DownloadVideoInput = {
       return pages.map((page: any, index: number) => {
         const key = page.cid
         const title = `P${page.page} ${page.part}`
+        const variables = getTitleVariables(false, {
+          n: formatNumber(page.page, pages.length),
+          cid: page.cid,
+          ep: page.part,
+          user: owner?.name,
+          userID: owner?.mid?.toString(),
+          publishYear: date.year,
+          publishMonth: date.month,
+          publishDay: date.day,
+          publishHour: date.hour,
+          publishMinute: date.minute,
+          publishSecond: date.second,
+          publishMillisecond: date.millisecond,
+        })
         return {
           key,
           title,
@@ -38,20 +52,8 @@ export const videoBatchInput: DownloadVideoInput = {
           durationText: formatDuration(page.duration),
           inputItem: {
             allowQualityDrop: true,
-            title: formatTitle(getGeneralSettings().batchFilenameFormat, false, {
-              n: formatNumber(page.page, pages.length),
-              cid: page.cid,
-              ep: page.part,
-              user: owner?.name,
-              userID: owner?.mid?.toString(),
-              publishYear: date.year,
-              publishMonth: date.month,
-              publishDay: date.day,
-              publishHour: date.hour,
-              publishMinute: date.minute,
-              publishSecond: date.second,
-              publishMillisecond: date.millisecond,
-            }),
+            title: formatVariables(getGeneralSettings().batchFilenameFormat, variables),
+            variables,
             cid: page.cid,
             aid,
           },
@@ -74,6 +76,7 @@ export const videoSeasonBatchInput: DownloadVideoInput = {
         logError(`获取视频合集列表失败, message = ${json.message}`)
         return []
       }
+      const collectionTitle = lodash.get(json, 'data.View.ugc_season.title')
       const owner = lodash.get(json, 'data.View.owner', {})
       const sections: { title?: string; episodes?: any[] }[] = lodash.get(
         json,
@@ -95,6 +98,26 @@ export const videoSeasonBatchInput: DownloadVideoInput = {
         return section.episodes.map(episode => {
           page += 1
           const date = getTitleVariablesFromDate(new Date(episode.arc.pubdate * 1000))
+          const episodeOwner = episode.arc.author ?? owner
+          const variables = getTitleVariables(false, {
+            collection: collectionTitle,
+            section: section.title,
+            n: formatNumber(page, totalEpisodesLength),
+            title: episode.page.part,
+            cid: episode.cid,
+            aid: episode.aid,
+            bvid: episode.bvid,
+            ep: episode.title,
+            user: episodeOwner.name,
+            userID: episodeOwner.mid?.toString(),
+            publishYear: date.year,
+            publishMonth: date.month,
+            publishDay: date.day,
+            publishHour: date.hour,
+            publishMinute: date.minute,
+            publishSecond: date.second,
+            publishMillisecond: date.millisecond,
+          })
           return {
             key: episode.cid,
             title: `P${page} ${episode.title}`,
@@ -103,23 +126,8 @@ export const videoSeasonBatchInput: DownloadVideoInput = {
             sectionTitle,
             inputItem: {
               allowQualityDrop: true,
-              title: formatTitle(getGeneralSettings().batchFilenameFormat, false, {
-                n: formatNumber(page, totalEpisodesLength),
-                title: episode.page.part,
-                cid: episode.cid,
-                aid: episode.aid,
-                bvid: episode.bvid,
-                ep: episode.title,
-                user: owner.name,
-                userID: owner.mid?.toString(),
-                publishYear: date.year,
-                publishMonth: date.month,
-                publishDay: date.day,
-                publishHour: date.hour,
-                publishMinute: date.minute,
-                publishSecond: date.second,
-                publishMillisecond: date.millisecond,
-              }),
+              title: formatVariables(getGeneralSettings().batchFilenameFormat, variables),
+              variables,
               cid: episode.cid,
               aid: episode.aid,
             },

@@ -79,11 +79,10 @@ const getUpNameLink = (): HTMLAnchorElement | null => {
   return upStaffInfo?.querySelector<HTMLAnchorElement>('a.staff-name') ?? null
 }
 
-export const formatTitle = (
-  format: string,
+export const getTitleVariables = (
   includesPageTitle = true,
   extraVariables: StringMap = {},
-) => {
+): StringMap => {
   const getLegacyTitle = () => {
     return (
       document.title
@@ -106,7 +105,7 @@ export const formatTitle = (
   const upNameLink = getUpNameLink()
   const upOwnerId = upNameLink?.href.replace(/.*space\.bilibili\.com\/(\d+).*/, '$1')
   const upOwnerName = upNameLink?.innerText?.trim() || undefined
-  const builtInVariables: StringMap = {
+  return {
     title: (() => {
       const videoPageTitle = dq('.video-info-container .video-title')
       if (videoPageTitle !== null) {
@@ -155,12 +154,13 @@ export const formatTitle = (
     m: dateVariables.minute,
     s: dateVariables.second,
     ms: dateVariables.millisecond,
-  }
-  const variables = {
-    ...builtInVariables,
     ...extraVariables,
   }
-  return formatVariables(format, variables)
 }
+export const formatTitle = (
+  format: string,
+  includesPageTitle = true,
+  extraVariables: StringMap = {},
+) => formatVariables(format, getTitleVariables(includesPageTitle, extraVariables))
 export const getFriendlyTitle = (includesPageTitle = true, extraVariables: StringMap = {}) =>
   formatTitle(getGeneralSettings().filenameFormat, includesPageTitle, extraVariables)

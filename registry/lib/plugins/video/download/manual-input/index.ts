@@ -2,7 +2,7 @@ import { bilibiliApi, getJsonWithCredentials } from '@/core/ajax'
 import { getGeneralSettings } from '@/core/settings'
 import { formatNumber } from '@/core/utils/formatters'
 import { useScopedConsole } from '@/core/utils/log'
-import { formatTitle } from '@/core/utils/title'
+import { formatVariables, getTitleVariables, getTitleVariablesFromDate } from '@/core/utils/title'
 import { videoUrls } from '@/core/utils/urls'
 import { PluginMetadata } from '@/plugins/plugin'
 import {
@@ -32,7 +32,7 @@ export const plugin: PluginMetadata = {
           }
           const apiData = await Promise.allSettled(
             instance.ids.map(id => {
-              if (/av(\d+)/i.test(id)) {
+              if (/^\d+$/.test(id)) {
                 return handleAid(id)
               }
               if (/BV(.+)/i.test(id)) {
@@ -50,37 +50,45 @@ export const plugin: PluginMetadata = {
           return apiData
             .filter((it): it is PromiseFulfilledResult<any> => it.status === 'fulfilled')
             .flatMap(result => {
-              const { aid, cid, bvid, title, pages } = result.value
-              if (pages.length > 1) {
-                return (pages as any[]).map((page, index) => {
-                  const item: DownloadVideoInputItem = {
-                    aid: aid.toString(),
-                    cid: page.cid.toString(),
-                    bvid,
-                    allowQualityDrop: true,
-                    title: formatTitle(
-                      getGeneralSettings().batchFilenameFormat,
-                      false,
-                      page.part
-                        ? {
-                            title,
-                            n: formatNumber(index + 1, pages.length),
-                            ep: page.part,
-                          }
-                        : { title },
-                    ),
-                  }
-                  return item
-                })
-              }
-              const item: DownloadVideoInputItem = {
+              const { aid, cid, bvid, title, pages, owner, pubdate } = result.value
+              const date = getTitleVariablesFromDate(new Date(pubdate * 1000))
+              const baseVariables = {
                 aid: aid.toString(),
-                cid: cid.toString(),
                 bvid,
-                allowQualityDrop: true,
-                title: formatTitle(getGeneralSettings().batchFilenameFormat, false, { title }),
+                title,
+                user: owner?.name,
+                userID: owner?.mid?.toString(),
+                publishYear: date.year,
+                publishMonth: date.month,
+                publishDay: date.day,
+                publishHour: date.hour,
+                publishMinute: date.minute,
+                publishSecond: date.second,
+                publishMillisecond: date.millisecond,
               }
-              return item
+              const selectedPages: { cid: number; part?: string }[] =
+                pages.length > 1 ? pages : [{ cid }]
+              return selectedPages.map((page, index): DownloadVideoInputItem => {
+                const pageCid = page.cid.toString()
+                const variables = getTitleVariables(false, {
+                  ...baseVariables,
+                  cid: pageCid,
+                  ...(page.part ? { n: formatNumber(index + 1, pages.length), ep: page.part } : {}),
+                })
+                const batchTitle = formatVariables(
+                  getGeneralSettings().batchFilenameFormat,
+                  variables,
+                )
+                return {
+                  aid: baseVariables.aid,
+                  cid: pageCid,
+                  bvid,
+                  allowQualityDrop: true,
+                  title:
+                    batchTitle || formatVariables(getGeneralSettings().filenameFormat, variables),
+                  variables,
+                }
+              })
             })
         },
         component: () => import('./ManualInput.vue').then(m => m.default),

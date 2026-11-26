@@ -2,8 +2,10 @@ import { getJson, monkey, postJson } from '@/core/ajax'
 import { Toast } from '@/core/toast'
 import { UserAgent } from '@/core/utils/constants'
 import { logError } from '@/core/utils/log'
+import { formatVariables } from '@/core/utils/title'
 import {
   DownloadVideoAssets,
+  DownloadVideoInputItem,
   DownloadVideoOutput,
 } from '../../../../components/video/download/types'
 import { Aria2RpcProfile } from './rpc-profiles'
@@ -12,18 +14,17 @@ interface RpcParam {
   params: (string | string[] | Record<string, string>)[]
   id: string
 }
-interface RpcResult {
-  success: boolean
+type RpcResult = {
   param: RpcParam
-  message: string
-}
+} & (
+  | { success: true; message: string | Record<string, string> }
+  | { success: false; message: string }
+)
 const getOption = (profile: Aria2RpcProfile) => {
   const host = profile.host.match(/^http[s]?:\/\//) ? profile.host : `http://${profile.host}`
-  const methodName = 'aria2.addUri'
   return {
     option: profile,
     host,
-    methodName,
   }
 }
 const handleRpcResponse = async (
@@ -63,11 +64,13 @@ const handleRpcResponse = async (
     }
   }
 }
-const getRpc = async (profile: Aria2RpcProfile, rpcParam: RpcParam) => {
-  const { option, host, methodName } = getOption(profile)
+const getRpc = async (profile: Aria2RpcProfile, rpcParam: RpcParam, methodName: string) => {
+  const { option, host } = getOption(profile)
   return handleRpcResponse(rpcParam, async () => {
-    const base64Params = window.btoa(unescape(encodeURIComponent(JSON.stringify(rpcParam.params))))
-    const url = `${host}:${option.port}/jsonrpc?method=${methodName}&id=${rpcParam.id}&params=${base64Params}`
+    const bytes = new TextEncoder().encode(JSON.stringify(rpcParam.params))
+    const binary = Array.from(bytes, byte => String.fromCharCode(byte)).join('')
+    const params = encodeURIComponent(window.btoa(binary))
+    const url = `${host}:${option.port}/jsonrpc?method=${methodName}&id=${rpcParam.id}&params=${params}`
     console.log(`RPC request: ${url}`)
     if (url.startsWith('http:')) {
       return monkey({
@@ -79,8 +82,8 @@ const getRpc = async (profile: Aria2RpcProfile, rpcParam: RpcParam) => {
     return getJson(url)
   })
 }
-const postRpc = async (profile: Aria2RpcProfile, rpcParam: RpcParam) => {
-  const { option, host, methodName } = getOption(profile)
+const postRpc = async (profile: Aria2RpcProfile, rpcParam: RpcParam, methodName: string) => {
+  const { option, host } = getOption(profile)
   return handleRpcResponse(rpcParam, async () => {
     const url = `${host}:${option.port}/jsonrpc`
     const data = {
@@ -99,14 +102,18 @@ const postRpc = async (profile: Aria2RpcProfile, rpcParam: RpcParam) => {
     return postJson(url, data)
   })
 }
-export const sendRpc = async (profile: Aria2RpcProfile, params: RpcParam[]) => {
+export const sendRpc = async (
+  profile: Aria2RpcProfile,
+  params: RpcParam[],
+  methodName = 'aria2.addUri',
+) => {
   const results: RpcResult[] = []
   for (const param of params) {
     let result: RpcResult
     if (profile.method === 'get') {
-      result = await getRpc(profile, param)
+      result = await getRpc(profile, param, methodName)
     } else {
-      result = await postRpc(profile, param)
+      result = await postRpc(profile, param, methodName)
     }
     results.push(result)
   }
@@ -126,6 +133,7 @@ const parseRpcOptions = (option: string): Record<string, string> => {
     .filter(it => Boolean(it[1])) // 过滤掉没有 = 的行 (value 为空)
   return Object.fromEntries(pairs)
 }
+const windowsAbsolutePath = /^(?:[a-z]:[\\/]|\\\\)/i
 export const aria2Rpc: DownloadVideoOutput = {
   name: 'aria2Rpc',
   displayName: 'aria2 RPC',
@@ -140,8 +148,60 @@ export const aria2Rpc: DownloadVideoOutput = {
     const { infos, extraOnlineAssets } = action
     const { selectedRpcProfile, isPluginDownloadAssets } = instance
     const { secretKey, dir, other } = selectedRpcProfile
+    const rpcOptions = { dir, ...parseRpcOptions(other) }
+    const directory = rpcOptions.dir || undefined
+    let defaultDirectory: string
+    if (directory && !directory.startsWith('/') && !windowsAbsolutePath.test(directory)) {
+      const [{ message }] = await sendRpc(
+        selectedRpcProfile,
+        [{ id: 'getGlobalOption', params: secretKey ? [`token:${secretKey}`] : [] }],
+        'aria2.getGlobalOption',
+      )
+      const defaultPath = typeof message === 'object' ? message?.dir : undefined
+      if (typeof defaultPath !== 'string' || !defaultPath) {
+        await logError(`获取 aria2 默认下载路径失败: ${JSON.stringify(message)}`)
+        return
+      }
+      defaultDirectory = defaultPath
+    }
+    const hasVariables = directory?.includes('[')
+    const resolveDirectory = (path: string) => {
+      if (!defaultDirectory) {
+        return path
+      }
+      if (!path) {
+        return defaultDirectory
+      }
+      const separator = windowsAbsolutePath.test(defaultDirectory) ? '\\' : '/'
+      return `${defaultDirectory.replace(/[\\/]+$/, '')}${separator}${path
+        .replace(/^[\\/]+/, '')
+        .replace(/[\\/]/g, separator)}`
+    }
+    const fixedDirectory = hasVariables ? undefined : resolveDirectory(directory)
+    const formatDirectory = (input: DownloadVideoInputItem) => {
+      if (!hasVariables) {
+        return fixedDirectory
+      }
+      const variables = input.variables ?? {
+        aid: String(input.aid),
+        cid: String(input.cid),
+        bvid: input.bvid,
+        title: input.title,
+      }
+      const formatted = directory
+        .split(/([\\/])/)
+        .map(part => {
+          if (!part.includes('[')) {
+            return part
+          }
+          return formatVariables(part, variables).replace(/[. ]+$/, '')
+        })
+        .join('')
+      return resolveDirectory(formatted || undefined)
+    }
+    const videoDirectories = infos.map(info => formatDirectory(info.input))
     const referer = document.URL.replace(window.location.search, '')
-    const getAria2Params = (url: string, title: string) => {
+    const getAria2Params = (url: string, title: string, path: string | undefined) => {
       const singleInfoParams = []
       if (secretKey) {
         singleInfoParams.push(`token:${secretKey}`)
@@ -151,8 +211,8 @@ export const aria2Rpc: DownloadVideoOutput = {
         referer,
         'user-agent': UserAgent,
         out: title,
-        dir: dir || undefined,
-        ...parseRpcOptions(other),
+        ...rpcOptions,
+        dir: path,
       })
       const id = encodeURIComponent(title)
       return {
@@ -161,14 +221,11 @@ export const aria2Rpc: DownloadVideoOutput = {
       }
     }
 
-    const videoParams = infos
-      .map(info =>
-        info.titledFragments.map(fragment => {
-          const { url, title } = fragment
-          return getAria2Params(url, title)
-        }),
-      )
-      .flat()
+    const videoParams = infos.flatMap((info, index) =>
+      info.titledFragments.map(({ url, title }) =>
+        getAria2Params(url, title, videoDirectories[index]),
+      ),
+    )
 
     const isAriaAsset = (asset: DownloadVideoAssets) =>
       isPluginDownloadAssets && asset.getUrls !== undefined
@@ -178,19 +235,33 @@ export const aria2Rpc: DownloadVideoOutput = {
           .filter(it => isAriaAsset(it.asset))
           .map(async it => {
             const { asset, instance: assetInstance } = it
+            if (hasVariables) {
+              const results = await Promise.all(
+                infos.map(async (info, index) => {
+                  const urls = await asset.getUrls([info], assetInstance)
+                  return urls.map(({ name, url }) =>
+                    getAria2Params(url, name, videoDirectories[index]),
+                  )
+                }),
+              )
+              return results.flat()
+            }
             const results = await asset.getUrls(infos, assetInstance)
-            return results.map(({ name, url }) => getAria2Params(url, name))
+            return results.map(({ name, url }) => getAria2Params(url, name, fixedDirectory))
           }),
       )
     ).flat()
     action.extraOnlineAssets = extraOnlineAssets.filter(it => !isAriaAsset(it.asset))
 
     const totalParams = [...videoParams, ...assetsAriaParams]
+    if (totalParams.length === 0) {
+      return
+    }
     const results = await sendRpc(selectedRpcProfile, totalParams)
     console.table(results)
     if (results.length === 1) {
       const result = results[0]
-      if (result.success) {
+      if (result.success === true) {
         Toast.success(`成功发送了请求, GID = ${result.message}`, 'aria2 RPC', 5000)
       } else {
         logError(result.message)

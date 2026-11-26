@@ -17,6 +17,7 @@ export interface DownloadVideoInputItem {
   cid: string
   /** 格式化 (formatTitle) 处理后的标题 */
   title: string
+  variables?: Record<string, string>
   bvid?: string
   /** 期望的画质, 忽略时表示返回任意画质都可以接受 */
   quality?: VideoQuality

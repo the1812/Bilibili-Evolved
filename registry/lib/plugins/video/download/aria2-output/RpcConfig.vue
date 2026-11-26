@@ -46,7 +46,11 @@
       </div>
       <div class="profile-dir">
         <div class="profile-item-name">路径:</div>
-        <TextBox v-model="selectedRpcProfile.dir" change-on-blur />
+        <TextArea
+          v-model="selectedRpcProfile.dir"
+          placeholder="路径变量规则可在插件详情中查看"
+          change-on-blur
+        />
       </div>
       <div class="profile-host">
         <div class="profile-item-name">主机:</div>
@@ -75,7 +79,8 @@
     </template>
   </div>
 </template>
-<script lang="ts">
+<script setup lang="ts">
+import { nextTick, ref } from 'vue'
 import { getComponentSettings } from '@/core/settings'
 import { Toast } from '@/core/toast'
 import { TextBox, VButton, VIcon, VDropdown, TextArea, SwitchBox } from '@/ui'
@@ -93,98 +98,72 @@ const defaultOptions: Options = {
   isPluginDownloadAssets: false,
 }
 const options = { ...defaultOptions, ...storedOptions }
-const handleMissingProfile = () => {
-  if (options.rpcProfiles.length < 1) {
-    options.rpcProfiles.push(defaultProfile)
-    return defaultProfile
-  }
-  return options.rpcProfiles[0]
+const rpcProfiles = ref<Aria2RpcProfile[]>(options.rpcProfiles)
+if (rpcProfiles.value.length === 0) {
+  rpcProfiles.value.push(defaultProfile)
 }
 const lastSelectedProfile =
-  options.rpcProfiles.find(p => p.name === options.selectedRpcProfileName) ?? handleMissingProfile()
+  rpcProfiles.value.find(p => p.name === options.selectedRpcProfileName) ?? rpcProfiles.value[0]
 console.log(options, lastSelectedProfile)
-export default Vue.extend({
-  components: {
-    TextBox,
-    VButton,
-    VIcon,
-    VDropdown,
-    TextArea,
-    SwitchBox,
-  },
-  data() {
-    return {
-      isRenaming: false,
-      profileRename: '',
-      rpcProfiles: options.rpcProfiles,
-      selectedRpcProfile: lastSelectedProfile,
-      isPluginDownloadAssets: options.isPluginDownloadAssets,
-    }
-  },
-  methods: {
-    saveProfileSettings() {
-      options.selectedRpcProfileName = this.selectedRpcProfile.name
-      options.rpcProfiles = this.rpcProfiles
-      storedOptions.selectedRpcProfileName = options.selectedRpcProfileName
-      storedOptions.rpcProfiles = options.rpcProfiles
-    },
-    saveAssetsSettings() {
-      options.isPluginDownloadAssets = this.isPluginDownloadAssets
-      storedOptions.isPluginDownloadAssets = options.isPluginDownloadAssets
-    },
-    async startRename() {
-      this.profileRename = this.selectedRpcProfile.name
-      this.isRenaming = true
-      await this.$nextTick()
-      this.$refs.renameInput?.focus()
-    },
-    endRename() {
-      const newName: string = this.profileRename
-      if (!newName) {
-        Toast.error('名称不得为空', '重命名 RPC 预设', 2000)
-        return
-      }
-      if (
-        options.rpcProfiles.some(p => p.name !== this.selectedRpcProfile.name && p.name === newName)
-      ) {
-        Toast.error('名称不得与其他预设重复', '重命名 RPC 预设', 2000)
-        return
-      }
-      this.selectedRpcProfile.name = this.profileRename
-      this.isRenaming = false
-      this.saveProfileSettings()
-    },
-    newProfile() {
-      const newProfile: Aria2RpcProfile = { ...this.selectedRpcProfile }
-      const newName = {
-        num: 1,
-        toString() {
-          return `未命名${this.num}`
-        },
-      }
-      while (options.rpcProfiles.some(p => p.name === newName.toString())) {
-        newName.num++
-      }
-      newProfile.name = newName.toString()
-      options.rpcProfiles.push(newProfile)
-      this.selectedRpcProfile = newProfile
-    },
-    deleteProfile() {
-      if (options.rpcProfiles.length < 2) {
-        return
-      }
-      const index = options.rpcProfiles.findIndex(p => p.name === this.selectedRpcProfile.name)
-      if (index === -1) {
-        return
-      }
-      if (!confirm(`确认删除 RPC 预设 "${this.selectedRpcProfile.name}" 吗?`)) {
-        return
-      }
-      options.rpcProfiles.splice(index, 1)
-      this.selectedRpcProfile = options.rpcProfiles[0]
-    },
-  },
-})
+const isRenaming = ref(false)
+const profileRename = ref('')
+const selectedRpcProfile = ref(lastSelectedProfile)
+const isPluginDownloadAssets = ref(options.isPluginDownloadAssets)
+const renameInput = ref<{ focus: () => void }>()
+
+defineExpose({ selectedRpcProfile, isPluginDownloadAssets })
+
+const saveProfileSettings = () => {
+  storedOptions.selectedRpcProfileName = selectedRpcProfile.value.name
+  storedOptions.rpcProfiles = rpcProfiles.value
+}
+const saveAssetsSettings = () => {
+  storedOptions.isPluginDownloadAssets = isPluginDownloadAssets.value
+}
+const startRename = async () => {
+  profileRename.value = selectedRpcProfile.value.name
+  isRenaming.value = true
+  await nextTick()
+  renameInput.value?.focus()
+}
+const endRename = () => {
+  const newName = profileRename.value
+  if (!newName) {
+    Toast.error('名称不得为空', '重命名 RPC 预设', 2000)
+    return
+  }
+  if (rpcProfiles.value.some(p => p.name !== selectedRpcProfile.value.name && p.name === newName)) {
+    Toast.error('名称不得与其他预设重复', '重命名 RPC 预设', 2000)
+    return
+  }
+  selectedRpcProfile.value.name = newName
+  isRenaming.value = false
+  saveProfileSettings()
+}
+const newProfile = () => {
+  const names = rpcProfiles.value.map(profile => profile.name)
+  let number = 1
+  while (names.includes(`未命名${number}`)) {
+    number += 1
+  }
+  const profile = { ...selectedRpcProfile.value, name: `未命名${number}` }
+  rpcProfiles.value.push(profile)
+  selectedRpcProfile.value = profile
+}
+const deleteProfile = () => {
+  if (rpcProfiles.value.length < 2) {
+    return
+  }
+  const index = rpcProfiles.value.findIndex(p => p.name === selectedRpcProfile.value.name)
+  if (index === -1) {
+    return
+  }
+  if (!confirm(`确认删除 RPC 预设 "${selectedRpcProfile.value.name}" 吗?`)) {
+    return
+  }
+  rpcProfiles.value.splice(index, 1)
+  selectedRpcProfile.value = rpcProfiles.value[0]
+}
 </script>
 <style lang="scss">
 @import 'common';
@@ -199,6 +178,10 @@ export default Vue.extend({
   }
   .profile-item-name {
     margin-right: 8px;
+  }
+  .profile-dir textarea {
+    resize: vertical;
+    min-height: 14px;
   }
   .profile-other .profile-item-name {
     align-self: flex-start;
