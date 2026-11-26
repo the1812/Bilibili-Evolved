@@ -48,7 +48,7 @@
         <div class="profile-item-name">路径:</div>
         <TextBox
           v-model="selectedRpcProfile.dir"
-          placeholder="支持命名变量, 如 [user]"
+          placeholder="路径变量规则可在插件详情中查看"
           change-on-blur
         />
       </div>

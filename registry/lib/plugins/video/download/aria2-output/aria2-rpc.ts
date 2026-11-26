@@ -14,17 +14,17 @@ interface RpcParam {
   params: (string | string[] | Record<string, string>)[]
   id: string
 }
-interface RpcResult {
-  success: boolean
+type RpcResult = {
   param: RpcParam
-  message: string
-}
+} & (
+  | { success: true; message: string | Record<string, string> }
+  | { success: false; message: string }
+)
 const getOption = (profile: Aria2RpcProfile) => {
   const host = profile.host.match(/^http[s]?:\/\//) ? profile.host : `http://${profile.host}`
   return {
     option: profile,
     host,
-    methodName: 'aria2.addUri',
   }
 }
 const handleRpcResponse = async (
@@ -64,8 +64,8 @@ const handleRpcResponse = async (
     }
   }
 }
-const getRpc = async (profile: Aria2RpcProfile, rpcParam: RpcParam) => {
-  const { option, host, methodName } = getOption(profile)
+const getRpc = async (profile: Aria2RpcProfile, rpcParam: RpcParam, methodName: string) => {
+  const { option, host } = getOption(profile)
   return handleRpcResponse(rpcParam, async () => {
     const bytes = new TextEncoder().encode(JSON.stringify(rpcParam.params))
     const binary = Array.from(bytes, byte => String.fromCharCode(byte)).join('')
@@ -82,8 +82,8 @@ const getRpc = async (profile: Aria2RpcProfile, rpcParam: RpcParam) => {
     return getJson(url)
   })
 }
-const postRpc = async (profile: Aria2RpcProfile, rpcParam: RpcParam) => {
-  const { option, host, methodName } = getOption(profile)
+const postRpc = async (profile: Aria2RpcProfile, rpcParam: RpcParam, methodName: string) => {
+  const { option, host } = getOption(profile)
   return handleRpcResponse(rpcParam, async () => {
     const url = `${host}:${option.port}/jsonrpc`
     const data = {
@@ -102,14 +102,18 @@ const postRpc = async (profile: Aria2RpcProfile, rpcParam: RpcParam) => {
     return postJson(url, data)
   })
 }
-export const sendRpc = async (profile: Aria2RpcProfile, params: RpcParam[]) => {
+export const sendRpc = async (
+  profile: Aria2RpcProfile,
+  params: RpcParam[],
+  methodName = 'aria2.addUri',
+) => {
   const results: RpcResult[] = []
   for (const param of params) {
     let result: RpcResult
     if (profile.method === 'get') {
-      result = await getRpc(profile, param)
+      result = await getRpc(profile, param, methodName)
     } else {
-      result = await postRpc(profile, param)
+      result = await postRpc(profile, param, methodName)
     }
     results.push(result)
   }
@@ -129,6 +133,23 @@ const parseRpcOptions = (option: string): Record<string, string> => {
     .filter(it => Boolean(it[1])) // 过滤掉没有 = 的行 (value 为空)
   return Object.fromEntries(pairs)
 }
+const windowsAbsolutePath = /^(?:[a-z]:[\\/]|\\\\)/i
+const aria2PathVariables = new Set([
+  'title',
+  'ep',
+  'user',
+  'userID',
+  'aid',
+  'bvid',
+  'cid',
+  'n',
+  'publishYear',
+  'publishMonth',
+  'publishDay',
+  'y',
+  'M',
+  'd',
+])
 export const aria2Rpc: DownloadVideoOutput = {
   name: 'aria2Rpc',
   displayName: 'aria2 RPC',
@@ -145,17 +166,49 @@ export const aria2Rpc: DownloadVideoOutput = {
     const { secretKey, dir, other } = selectedRpcProfile
     const rpcOptions = { dir, ...parseRpcOptions(other) }
     const directory = rpcOptions.dir || undefined
+    let defaultDirectory: string
+    if (directory && !directory.startsWith('/') && !windowsAbsolutePath.test(directory)) {
+      const [{ message }] = await sendRpc(
+        selectedRpcProfile,
+        [{ id: 'getGlobalOption', params: secretKey ? [`token:${secretKey}`] : [] }],
+        'aria2.getGlobalOption',
+      )
+      const defaultPath = typeof message === 'object' ? message?.dir : undefined
+      if (typeof defaultPath !== 'string' || !defaultPath) {
+        await logError(`获取 aria2 默认下载路径失败: ${JSON.stringify(message)}`)
+        return
+      }
+      defaultDirectory = defaultPath
+    }
     const hasVariables = directory?.includes('[')
+    const resolveDirectory = (path: string) => {
+      if (!defaultDirectory) {
+        return path
+      }
+      if (!path) {
+        return defaultDirectory
+      }
+      const separator = windowsAbsolutePath.test(defaultDirectory) ? '\\' : '/'
+      return `${defaultDirectory.replace(/[\\/]+$/, '')}${separator}${path
+        .replace(/^[\\/]+/, '')
+        .replace(/[\\/]/g, separator)}`
+    }
+    const fixedDirectory = hasVariables ? undefined : resolveDirectory(directory)
     const formatDirectory = (input: DownloadVideoInputItem) => {
       if (!hasVariables) {
-        return directory
+        return fixedDirectory
       }
-      const variables = input.variables ?? {
-        aid: String(input.aid),
-        cid: String(input.cid),
-        bvid: input.bvid,
-        title: input.title,
+      const inputVariables = {
+        ...(input.variables ?? {
+          aid: String(input.aid),
+          cid: String(input.cid),
+          bvid: input.bvid,
+          title: input.title,
+        }),
       }
+      const variables = Object.fromEntries(
+        Object.entries(inputVariables).filter(([name]) => aria2PathVariables.has(name)),
+      )
       const formatted = directory
         .split(/([\\/])/)
         .map(part => {
@@ -165,7 +218,7 @@ export const aria2Rpc: DownloadVideoOutput = {
           return formatVariables(part, variables).replace(/[. ]+$/, '')
         })
         .join('')
-      return formatted || undefined
+      return resolveDirectory(formatted || undefined)
     }
     const videoDirectories = infos.map(info => formatDirectory(info.input))
     const referer = document.URL.replace(window.location.search, '')
@@ -215,7 +268,7 @@ export const aria2Rpc: DownloadVideoOutput = {
               return results.flat()
             }
             const results = await asset.getUrls(infos, assetInstance)
-            return results.map(({ name, url }) => getAria2Params(url, name, directory))
+            return results.map(({ name, url }) => getAria2Params(url, name, fixedDirectory))
           }),
       )
     ).flat()
@@ -229,7 +282,7 @@ export const aria2Rpc: DownloadVideoOutput = {
     console.table(results)
     if (results.length === 1) {
       const result = results[0]
-      if (result.success) {
+      if (result.success === true) {
         Toast.success(`成功发送了请求, GID = ${result.message}`, 'aria2 RPC', 5000)
       } else {
         logError(result.message)
