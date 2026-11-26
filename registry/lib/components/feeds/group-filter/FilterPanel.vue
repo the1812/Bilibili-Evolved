@@ -19,7 +19,13 @@
 import { CheckBox, VIcon } from '@/ui'
 import { bilibiliApi, getJsonWithCredentials, getPages } from '@/core/ajax'
 import { FeedsCard, forEachFeedsCard } from '@/components/feeds/api'
-import { getComponentSettings } from '@/core/settings'
+import {
+  addComponentListener,
+  getComponentSettings,
+  removeComponentListener,
+} from '@/core/settings'
+import { mutationObserve } from '@/core/observer'
+import { select } from '@/core/spin-query'
 import { getUID } from '@/core/utils'
 import { FeedsGroupFilterOptions } from './options'
 
@@ -46,12 +52,22 @@ export default Vue.extend({
       selectedGroupIds: [],
       collapse: true,
       isRestoringGroups: true,
+      followingLoaded: false,
+      upListRoot: null,
+      upListObserver: null,
+      upListFrame: 0,
+      disposed: false,
     } as {
       groups: Group[]
       followingMap: Map<string, number[]>
       selectedGroupIds: number[]
       collapse: boolean
       isRestoringGroups: boolean
+      followingLoaded: boolean
+      upListRoot: HTMLElement | null
+      upListObserver: MutationObserver | null
+      upListFrame: number
+      disposed: boolean
     }
   },
   computed: {
@@ -74,6 +90,7 @@ export default Vue.extend({
       handler(newGroups: Group[]) {
         this.selectedGroupIds = newGroups.filter(group => group.checked).map(group => group.id)
         this.updateCards()
+        this.updateUpList()
         if (!this.isRestoringGroups) {
           options.disabledGroupIds = newGroups
             .filter(group => !group.checked)
@@ -85,6 +102,7 @@ export default Vue.extend({
     },
   },
   async mounted() {
+    addComponentListener('feedsGroupFilter.filterUpList', this.configureUpList)
     cardsManager = await forEachFeedsCard({
       added: card => {
         this.updateCard(lodash.clone(card))
@@ -118,9 +136,79 @@ export default Vue.extend({
     allPages.forEach(user => {
       this.followingMap.set(user.uname, user.tag)
     })
+    this.followingLoaded = true
     this.updateCards()
+    this.configureUpList()
+  },
+  beforeDestroy() {
+    this.disposed = true
+    removeComponentListener('feedsGroupFilter.filterUpList', this.configureUpList)
+    this.configureUpList()
   },
   methods: {
+    async configureUpList() {
+      this.upListObserver?.disconnect()
+      this.upListObserver = null
+      cancelAnimationFrame(this.upListFrame)
+      this.upListFrame = 0
+      this.updateUpList()
+      if (
+        this.disposed ||
+        !options.filterUpList ||
+        !this.followingLoaded ||
+        cardsManager?.managerType !== 'v2'
+      ) {
+        return
+      }
+      const main = await select<HTMLElement>('.bili-dyn-home--member main')
+      if (!main || this.disposed || !options.filterUpList || this.upListObserver) {
+        return
+      }
+      this.upListRoot = main
+      this.upListObserver = mutationObserve(
+        [main],
+        { childList: true, subtree: true, characterData: true },
+        () => {
+          if (this.upListFrame) {
+            return
+          }
+          this.upListFrame = requestAnimationFrame(() => {
+            this.upListFrame = 0
+            this.updateUpList()
+          })
+        },
+      )[0]
+    },
+    updateUpList() {
+      const upList = this.upListRoot?.querySelector('.bili-dyn-up-list')
+      if (!upList) {
+        return
+      }
+      const enabled = options.filterUpList && this.followingLoaded && !this.disposed
+      let activeHidden = false
+      upList.querySelectorAll<HTMLElement>('.bili-dyn-up-list__item').forEach(item => {
+        const isAll = item.querySelector('.bili-dyn-up-list__item__face.all') !== null
+        const username = item.querySelector('.bili-dyn-up-list__item__name')?.textContent.trim()
+        const hidden = enabled && !isAll && !this.isUserInSelectedGroups(username)
+        activeHidden ||= hidden && item.classList.contains('active')
+        item.classList.toggle('group-filter-hide-up', hidden)
+      })
+      // 当前 UP 被排除时回到聚合动态，避免停留在已隐藏的单人入口。
+      if (activeHidden) {
+        upList
+          .querySelector('.bili-dyn-up-list__item__face.all')
+          ?.closest<HTMLElement>('.bili-dyn-up-list__item')
+          ?.click()
+      }
+    },
+    isUserInSelectedGroups(username: string) {
+      // 关注接口中已删除分组的 tag 不会重置, 过滤后全部无效时归入默认分组
+      const validTagIds = (this.followingMap.get(username) ?? []).filter(id =>
+        this.validGroupIds.has(id),
+      )
+      const userTagIds = validTagIds.length > 0 ? validTagIds : [defaultGroupId]
+      return userTagIds.some(item => this.selectedGroupIds.includes(item))
+    },
     updateCards() {
       if (!cardsManager) {
         return
@@ -133,12 +221,7 @@ export default Vue.extend({
       if (!this.selectedGroupIds) {
         return
       }
-      // 关注接口中已删除分组的 tag 不会重置, 过滤后全部无效时归入默认分组
-      const validTagIds = (this.followingMap.get(card.username) ?? []).filter(id =>
-        this.validGroupIds.has(id),
-      )
-      const userTagIds = validTagIds.length > 0 ? validTagIds : [defaultGroupId]
-      if (!userTagIds.some(item => this.selectedGroupIds.includes(item))) {
+      if (!this.isUserInSelectedGroups(card.username)) {
         card.element.classList.add('group-filter-hide-feed')
       } else {
         card.element.classList.remove('group-filter-hide-feed')
@@ -149,7 +232,8 @@ export default Vue.extend({
 </script>
 
 <style lang="scss">
-.group-filter-hide-feed {
+.group-filter-hide-feed,
+.bili-dyn-up-list .group-filter-hide-up {
   display: none !important;
 }
 
