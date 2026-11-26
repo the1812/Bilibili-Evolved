@@ -32,7 +32,7 @@ export const plugin: PluginMetadata = {
           }
           const apiData = await Promise.allSettled(
             instance.ids.map(id => {
-              if (/av(\d+)/i.test(id)) {
+              if (/^\d+$/.test(id)) {
                 return handleAid(id)
               }
               if (/BV(.+)/i.test(id)) {
@@ -75,12 +75,17 @@ export const plugin: PluginMetadata = {
                   cid: pageCid,
                   ...(page.part ? { n: formatNumber(index + 1, pages.length), ep: page.part } : {}),
                 })
+                const batchTitle = formatVariables(
+                  getGeneralSettings().batchFilenameFormat,
+                  variables,
+                )
                 return {
                   aid: baseVariables.aid,
                   cid: pageCid,
                   bvid,
                   allowQualityDrop: true,
-                  title: formatVariables(getGeneralSettings().batchFilenameFormat, variables),
+                  title:
+                    batchTitle || formatVariables(getGeneralSettings().filenameFormat, variables),
                   variables,
                 }
               })
