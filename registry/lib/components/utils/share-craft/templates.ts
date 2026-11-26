@@ -25,7 +25,8 @@ export enum CountFormat {
 }
 
 export const presetTemplates: Record<Preset, string> = {
-  [Preset.Standard]: '【{up}】{title}\n⏱ {duration} · ▶ {views} · 👍 {likes}\n{short_url}',
+  [Preset.Standard]:
+    '【{up}】{title}\n{cover_image}\n⏱ {duration} · ▶ {views} · 👍 {likes}\n{short_url}',
   [Preset.Minimal]: '{title} {short_url}',
   [Preset.Data]:
     '{title}\n时长 {duration} · 播放 {views} · 点赞 {likes} · 投币 {coins}\n{short_url}',

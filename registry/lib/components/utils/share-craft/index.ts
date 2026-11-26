@@ -2,10 +2,11 @@ import type { OptionsOfMetadata } from '@/components/define'
 import { defineComponentMetadata, defineOptionsMetadata } from '@/components/define'
 import type { ComponentEntry } from '@/components/types'
 import { VideoInfo } from '@/components/video/video-info'
-import { urlChange } from '@/core/observer'
+import { videoChange } from '@/core/observer'
 import type { ComponentSettings } from '@/core/settings/types'
 import { Toast } from '@/core/toast'
 import { formatCount, formatDuration } from '@/core/utils/formatters'
+import { useScopedConsole } from '@/core/utils/log'
 import { videoUrls } from '@/core/utils/urls'
 import { coverImageUrl, getCoverSize } from './cover'
 import type { CoverSize } from './cover'
@@ -69,125 +70,55 @@ const options = defineOptionsMetadata({
   },
 })
 
-type Options = OptionsOfMetadata<typeof options>
-type ShareSettings = ComponentSettings<Options>
+export type ShareCraftOptions = OptionsOfMetadata<typeof options>
+type ShareSettings = ComponentSettings<ShareCraftOptions>
 
-interface VideoId {
-  bvid?: string
-  aid?: string
-}
-
-interface ShareFields {
-  [key: string]: string
+interface CurrentVideo {
+  aid: string
+  cid: string
 }
 
 interface SharePayload {
   text: string
-  /** 与 text 相同, 但把 {cover_image} 换成了占位符, 供富文本插入图片 */
+  /** 与 text 相同, 但 {cover_image} 被替换为 coverMarker, 供富文本插入图片 */
   html: string
   coverUrl: string
 }
 
-/** 富文本里标记封面图位置的控制字符, 不会出现在正常文案中 */
-const coverMarker = '\u0001'
+const console = useScopedConsole('分享文案定制')
 
-const cacheTtl = 10 * 60 * 1000
-const cacheLimit = 50
+/** 富文本里标记封面图位置, 使用 Unicode 的对象替换字符 (U+FFFC) */
+const coverMarker = '\uFFFC'
 
-/**
- * 视频页的分享入口. 视频下方工具栏的分享按钮点击后直接复制链接,
- * 旧版工具栏和播放器控制栏使用另外两套类名.
- */
+/** 新版工具栏、旧版工具栏、播放器控制栏的分享按钮 */
 const shareEntrySelector = [
   '.video-share',
   '.video-toolbar-v1 .share-wrap',
   '.player-left-components [class*="toolbar_share_info"]',
 ].join(', ')
 
-const infoCache = new Map<string, { info: VideoInfo; time: number }>()
-const pendingRequests = new Map<string, Promise<VideoInfo | null>>()
+let currentVideo: CurrentVideo | null = null
+let videoInfo: { aid: string; request: Promise<VideoInfo | null> } | null = null
 
-const cacheKeyOf = (id: VideoId) => id.bvid ?? `av${id.aid}`
-
-const getCurrentVideoId = (): VideoId | null => {
-  const match = location.pathname.match(/\/video\/(BV[0-9A-Za-z]{10})/)
-  if (match) {
-    return { bvid: match[1] }
+/** 只保留当前视频的信息, 请求失败时清除, 下次点击会重新请求 */
+const loadVideoInfo = (aid: string) => {
+  if (videoInfo?.aid === aid) {
+    return videoInfo.request
   }
-  const aidMatch = location.pathname.match(/\/video\/av(\d+)/i)
-  if (aidMatch) {
-    return { aid: aidMatch[1] }
-  }
-  return null
-}
-
-const getCurrentPageNumber = (info: VideoInfo) => {
-  const page = Number(new URLSearchParams(location.search).get('p'))
-  if (!Number.isInteger(page) || page < 1) {
-    return 1
-  }
-  if (info.pages?.length && !info.pages.some(it => it.pageNumber === page)) {
-    return 1
-  }
-  return page
-}
-
-const getCachedInfo = (id: VideoId) => {
-  const key = cacheKeyOf(id)
-  const cached = infoCache.get(key)
-  if (!cached) {
-    return null
-  }
-  if (Date.now() - cached.time > cacheTtl) {
-    infoCache.delete(key)
-    return null
-  }
-  return cached.info
-}
-
-const storeInfo = (info: VideoInfo) => {
-  if (infoCache.size >= cacheLimit) {
-    const oldestKey = infoCache.keys().next().value
-    if (oldestKey !== undefined) {
-      infoCache.delete(oldestKey)
+  const request = new VideoInfo(aid).fetchInfo().catch(error => {
+    console.warn('获取视频信息失败', error)
+    if (videoInfo?.aid === aid) {
+      videoInfo = null
     }
-  }
-  const entry = { info, time: Date.now() }
-  infoCache.set(info.bvid ?? `av${info.aid}`, entry)
-  if (info.aid) {
-    infoCache.set(`av${info.aid}`, entry)
-  }
-}
-
-const fetchInfo = async (id: VideoId) => {
-  const key = cacheKeyOf(id)
-  const pending = pendingRequests.get(key)
-  if (pending) {
-    return pending
-  }
-  const request = (async () => {
-    try {
-      const info = id.bvid ? new VideoInfo(id.bvid, true) : new VideoInfo(id.aid)
-      await info.fetchInfo()
-      storeInfo(info)
-      return info
-    } catch (error) {
-      console.warn('[分享文案定制] 获取视频信息失败', error)
-      return null
-    } finally {
-      pendingRequests.delete(key)
-    }
-  })()
-  pendingRequests.set(key, request)
+    return null
+  })
+  videoInfo = { aid, request }
   return request
 }
 
 const pad = (value: number) => value.toString().padStart(2, '0')
 
 const formatDateText = (timestamp: number, mode: DateFormat) => {
-  if (!timestamp) {
-    return ''
-  }
   const date = new Date(timestamp * 1000)
   if (mode === DateFormat.Chinese) {
     return `${date.getFullYear()}年${date.getMonth() + 1}月${date.getDate()}日`
@@ -208,31 +139,19 @@ const formatDateText = (timestamp: number, mode: DateFormat) => {
 }
 
 const formatDurationText = (seconds: number, mode: DurationFormat) => {
-  if (!seconds) {
-    return ''
+  if (mode === DurationFormat.Clock) {
+    return formatDuration(seconds)
   }
-  if (mode === DurationFormat.Text) {
-    const hour = Math.trunc(seconds / 3600)
-    const minute = Math.trunc(seconds / 60) % 60
-    const second = Math.round(seconds % 60)
-    const parts = [`${minute}分`]
-    if (second > 0) {
-      parts.push(`${second}秒`)
-    }
-    return `${hour > 0 ? `${hour}小时` : ''}${parts.join('')}`
-  }
-  return formatDuration(seconds)
+  const hour = Math.floor(seconds / 3600)
+  const minute = Math.floor(seconds / 60) % 60
+  const second = seconds % 60
+  return [hour > 0 && `${hour}小时`, `${minute}分`, second > 0 && `${second}秒`]
+    .filter(Boolean)
+    .join('')
 }
 
-const formatCountText = (count: number, mode: CountFormat) => {
-  if (typeof count !== 'number' || Number.isNaN(count)) {
-    return ''
-  }
-  if (mode === CountFormat.Raw) {
-    return count.toString()
-  }
-  return formatCount(count)
-}
+const formatCountText = (count: number, mode: CountFormat) =>
+  mode === CountFormat.Raw ? count.toString() : formatCount(count)
 
 const truncate = (text: string, length: number) => {
   const normalized = text.replace(/\s+/g, ' ').trim()
@@ -242,47 +161,44 @@ const truncate = (text: string, length: number) => {
   return `${normalized.slice(0, length)}…`
 }
 
-const buildFields = (info: VideoInfo, settings: ShareSettings, pageNumber: number): ShareFields => {
-  const { options: userOptions } = settings
-  const page = info.pages?.find(it => it.pageNumber === pageNumber) ?? info.pages?.[0]
-  const duration = page?.duration ?? 0
-  const baseUrl = `https://www.bilibili.com/video/${info.bvid || `av${info.aid}`}`
-  const url = pageNumber > 1 ? `${baseUrl}?p=${pageNumber}` : baseUrl
+const buildFields = (
+  info: VideoInfo,
+  settings: ShareSettings,
+  cid: string,
+): Record<string, string> => {
+  const { dateFormat, durationFormat, countFormat, descLength } = settings.options
+  const page = info.pages.find(it => it.cid.toString() === cid) ?? info.pages[0]
+  const baseUrl = `https://www.bilibili.com/video/${info.bvid}`
+  const url = page.pageNumber > 1 ? `${baseUrl}?p=${page.pageNumber}` : baseUrl
   // b23.tv 在 302 跳转时会丢掉 query, 多 P 只能用带 ?p= 的长链
-  const shortUrl = info.bvid && pageNumber === 1 ? `https://b23.tv/${info.bvid}` : url
+  const shortUrl = page.pageNumber > 1 ? url : `https://b23.tv/${info.bvid}`
   return {
-    title: info.title ?? '',
-    up: info.up?.name ?? '',
-    uid: info.up?.uid?.toString() ?? '',
-    up_url: info.up?.uid ? `https://space.bilibili.com/${info.up.uid}` : '',
-    bv: info.bvid ?? '',
-    av: info.aid ? `av${info.aid}` : '',
-    aid: info.aid ?? '',
+    title: info.title,
+    up: info.up.name,
+    uid: info.up.uid.toString(),
+    up_url: `https://space.bilibili.com/${info.up.uid}`,
+    bv: info.bvid,
+    av: `av${info.aid}`,
+    aid: info.aid.toString(),
     url,
     short_url: shortUrl,
-    date: formatDateText(info.pubdate, userOptions.dateFormat),
-    duration: formatDurationText(duration, userOptions.durationFormat),
-    views: formatCountText(info.stat?.view, userOptions.countFormat),
-    danmaku: formatCountText(info.stat?.danmaku, userOptions.countFormat),
-    likes: formatCountText(info.stat?.like, userOptions.countFormat),
-    coins: formatCountText(info.stat?.coin, userOptions.countFormat),
-    favorites: formatCountText(info.stat?.favorite, userOptions.countFormat),
-    replies: formatCountText(info.stat?.reply, userOptions.countFormat),
-    shares: formatCountText(info.stat?.share, userOptions.countFormat),
-    tname: info.tagName ?? '',
-    part: page?.title ?? '',
-    p: pageNumber.toString(),
-    page_count: info.pageCount?.toString() ?? '',
-    desc: truncate(info.description ?? '', userOptions.descLength),
-    cover: info.coverUrl ?? '',
+    date: formatDateText(info.pubdate, dateFormat),
+    duration: formatDurationText(page.duration, durationFormat),
+    views: formatCountText(info.stat.view, countFormat),
+    danmaku: formatCountText(info.stat.danmaku, countFormat),
+    likes: formatCountText(info.stat.like, countFormat),
+    coins: formatCountText(info.stat.coin, countFormat),
+    favorites: formatCountText(info.stat.favorite, countFormat),
+    replies: formatCountText(info.stat.reply, countFormat),
+    shares: formatCountText(info.stat.share, countFormat),
+    tname: info.tagName,
+    part: page.title,
+    p: page.pageNumber.toString(),
+    page_count: info.pageCount.toString(),
+    desc: truncate(info.description, descLength),
+    cover: info.coverUrl,
     cover_image: '',
   }
-}
-
-/** 稳定版 2.12 还没有 Toast.warn, 这里做一下兼容 */
-const showTemplateWarning = (message: string) => {
-  const show = Toast.warn ?? Toast.error ?? Toast.show
-  show.call(Toast, message, '分享文案定制', 3000)
 }
 
 const resolveTemplate = (settings: ShareSettings) => {
@@ -297,99 +213,47 @@ const createSharePayload = (
   info: VideoInfo,
   template: string,
   settings: ShareSettings,
-  pageNumber: number,
+  cid: string,
 ): SharePayload => {
-  const fields = buildFields(info, settings, pageNumber)
+  const fields = buildFields(info, settings, cid)
   // {cover_image} 独占一行时, 纯文本里不该留下空行
   const textTemplate = template.replace(/^[ \t]*\{cover_image\}[ \t]*\r?\n/gm, '')
-  const rendered = renderTemplate(textTemplate, fields).trim()
   return {
-    text: rendered || fields.url,
+    text: renderTemplate(textTemplate, fields).trim() || fields.url,
     html: renderTemplate(template, { ...fields, cover_image: coverMarker }).trim(),
-    coverUrl: info.coverUrl ?? '',
+    coverUrl: info.coverUrl,
   }
 }
 
 const escapeHtml = (text: string) =>
   text.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;')
 
-const coverSpan = (text: string) =>
-  `<span class="text-element text-element--other" style="font-size: 18px; font-weight: 400; font-family: &quot;PingFang SC&quot;, &quot;Microsoft YaHei&quot;, sans-serif;">${text}</span>`
-
 /**
  * QQ 的富文本粘贴只认自己那套 <span class="text-element"> + <img data-role="pic"> 结构,
  * 图片必须是网络链接; 换成 div 或 data URI 都会导致 QQ 整次粘贴失败
  */
 const buildShareHtml = (source: string, imageUrl: string, size: CoverSize) => {
-  const image = `<img class="kbWr9sfB9IRWrYy32v0K" src="${imageUrl}" data-role="pic" data-path="${imageUrl}" data-pic-sub-type="0" loading="eager" style="width: ${size.width}px; height: ${size.height}px; object-fit: cover;">`
-  const renderText = (text: string) => coverSpan(escapeHtml(text).replace(/\r?\n/g, '<br>'))
-  // 只保留两段文本 + 一张图, 跟 QQ 能接受的简单结构一致;
-  // 先把 marker 两侧的换行去掉, 图片就不会前后各顶出一个空行
-  const normalized = [
-    `\r\n${coverMarker}`,
-    `\n${coverMarker}`,
-    `${coverMarker}\r\n`,
-    `${coverMarker}\n`,
-  ].reduce((text, pattern) => text.split(pattern).join(coverMarker), source)
-  const segments = normalized.split(coverMarker)
-  let html = segments[0] ? renderText(segments[0]) : ''
-  for (const segment of segments.slice(1)) {
+  const image = `<img src="${imageUrl}" data-role="pic" data-path="${imageUrl}" data-pic-sub-type="0" loading="eager" style="width: ${size.width}px; height: ${size.height}px; object-fit: cover;">`
+  const textSpan = (text: string) =>
+    `<span class="text-element text-element--other" style="font-size: 18px; font-weight: 400; font-family: &quot;PingFang SC&quot;, &quot;Microsoft YaHei&quot;, sans-serif;">${escapeHtml(
+      text,
+    ).replace(/\r?\n/g, '<br>')}</span>`
+  // 图片前后自带 <br>, 去掉 marker 两侧的换行以免多出空行
+  const [first, ...rest] = source.replace(/\r?\n?\uFFFC\r?\n?/g, coverMarker).split(coverMarker)
+  let html = first ? textSpan(first) : ''
+  for (const segment of rest) {
     html += `<br>${image}`
     if (segment) {
-      html += `<br>${renderText(segment)}`
+      html += `<br>${textSpan(segment)}`
     }
   }
   return html
 }
 
 const showCopiedToast = (settings: ShareSettings, withCover: boolean) => {
-  if (!settings.options.showToast) {
-    return
+  if (settings.options.showToast) {
+    Toast.success(withCover ? '已复制分享文案和封面图' : '已复制分享文案', '分享文案定制', 2000)
   }
-  Toast.success(withCover ? '已复制分享文案和封面图' : '已复制分享文案', '分享文案定制', 2000)
-}
-
-const fallbackText = (id: VideoId) => {
-  const path = id.bvid || `av${id.aid}`
-  const page = new URLSearchParams(location.search).get('p')
-  return `https://www.bilibili.com/video/${path}${page && page !== '1' ? `?p=${page}` : ''}`
-}
-
-const writeSharePayload = async (payload: SharePayload, settings: ShareSettings) => {
-  const { clipboard } = navigator
-  if (!clipboard) {
-    console.warn('[分享文案定制] 当前环境没有剪贴板接口')
-    return
-  }
-  const Item = typeof ClipboardItem === 'undefined' ? unsafeWindow.ClipboardItem : ClipboardItem
-  const hasCover = payload.coverUrl !== '' && payload.html.includes(coverMarker)
-  if (hasCover && clipboard.write && Item) {
-    const maxWidth = settings.options.coverWidth
-    const imageUrl = coverImageUrl(payload.coverUrl, maxWidth)
-    const size = getCoverSize(imageUrl, maxWidth).then(
-      value => value ?? { width: maxWidth, height: Math.round((maxWidth * 9) / 16) },
-    )
-    try {
-      // ClipboardItem 必须在用户手势里同步构造, 图片尺寸用 promise 延迟解析
-      await clipboard.write([
-        new Item({
-          'text/plain': new Blob([payload.text], { type: 'text/plain' }),
-          'text/html': size.then(
-            value =>
-              new Blob([buildShareHtml(payload.html, imageUrl, value)], {
-                type: 'text/html',
-              }),
-          ),
-        }),
-      ])
-      showCopiedToast(settings, true)
-      return
-    } catch (error) {
-      console.warn('[分享文案定制] 写入封面失败, 回退为纯文本', error)
-    }
-  }
-  await clipboard.writeText(payload.text)
-  showCopiedToast(settings, false)
 }
 
 const copyPlainText = async (text: string, settings: ShareSettings) => {
@@ -397,91 +261,104 @@ const copyPlainText = async (text: string, settings: ShareSettings) => {
   showCopiedToast(settings, false)
 }
 
-const copyCurrentVideo = async (id: VideoId, template: string, settings: ShareSettings) => {
-  const info = getCachedInfo(id) ?? (await fetchInfo(id))
-  if (!info) {
-    await copyPlainText(fallbackText(id), settings)
+const writeSharePayload = async (payload: SharePayload, settings: ShareSettings) => {
+  if (!payload.coverUrl || !payload.html.includes(coverMarker)) {
+    await copyPlainText(payload.text, settings)
     return
   }
-  const payload = createSharePayload(info, template, settings, getCurrentPageNumber(info))
-  await writeSharePayload(payload, settings)
+  const Item = typeof ClipboardItem === 'undefined' ? unsafeWindow.ClipboardItem : ClipboardItem
+  const maxWidth = settings.options.coverWidth
+  const imageUrl = coverImageUrl(payload.coverUrl, maxWidth)
+  try {
+    // 尺寸以 promise 交给 ClipboardItem, 不在写入前等待图片下载, 避免丢失用户激活
+    await navigator.clipboard.write([
+      new Item({
+        'text/plain': new Blob([payload.text], { type: 'text/plain' }),
+        'text/html': getCoverSize(imageUrl, maxWidth).then(
+          size => new Blob([buildShareHtml(payload.html, imageUrl, size)], { type: 'text/html' }),
+        ),
+      }),
+    ])
+    showCopiedToast(settings, true)
+  } catch (error) {
+    console.warn('写入封面失败, 回退为纯文本', error)
+    await copyPlainText(payload.text, settings)
+  }
+}
+
+const copyCurrentVideo = async (video: CurrentVideo, settings: ShareSettings) => {
+  let template = resolveTemplate(settings)
+  const unknown = findUnknownVariables(template)
+  if (unknown.length > 0) {
+    Toast.warn(
+      `模板包含未知变量: ${unknown.map(name => `{${name}}`).join(', ')}`,
+      '分享文案定制',
+      3000,
+    )
+    template = '{url}'
+  }
+  const info = await loadVideoInfo(video.aid)
+  if (!info) {
+    await copyPlainText(`https://www.bilibili.com/video/av${video.aid}`, settings)
+    return
+  }
+  await writeSharePayload(createSharePayload(info, template, settings, video.cid), settings)
 }
 
 const handleShareClick = (event: MouseEvent, settings: ShareSettings) => {
-  if (event.button !== 0) {
+  const target = event.target as Element
+  // 悬停面板里的按钮保持原生行为; 视频信息就绪前也不接管
+  if (
+    !currentVideo ||
+    target.closest('.video-share-popover, .video-share-dropdown') ||
+    !target.closest(shareEntrySelector)
+  ) {
     return
   }
-  const { target } = event
-  if (!(target instanceof Element)) {
-    return
-  }
-  // 悬停面板里的按钮保持原生行为, 只有直接点击分享按钮才复制模板文案
-  if (target.closest('.video-share-popover, .video-share-dropdown')) {
-    return
-  }
-  if (!target.closest(shareEntrySelector)) {
-    return
-  }
-  // 分享入口的点击一律由这里接管, 不保留任何回退到原生复制的路径
   event.preventDefault()
   event.stopPropagation()
-  const id = getCurrentVideoId()
-  if (!id) {
-    copyPlainText(location.href.replace(location.hash, ''), settings).catch(error => {
-      console.warn('[分享文案定制] 复制页面链接失败', error)
-    })
-    return
-  }
-  const template = resolveTemplate(settings)
-  const unknown = findUnknownVariables(template)
-  if (unknown.length > 0) {
-    showTemplateWarning(`模板包含未知变量: ${unknown.map(name => `{${name}}`).join(', ')}`)
-    copyPlainText(fallbackText(id), settings).catch(error => {
-      console.warn('[分享文案定制] 复制视频链接失败', error)
-    })
-    return
-  }
-  copyCurrentVideo(id, template, settings).catch(error => {
-    console.warn('[分享文案定制] 复制分享文案失败', error)
+  copyCurrentVideo(currentVideo, settings).catch(error => {
+    console.warn('复制分享文案失败', error)
   })
 }
 
-const prefetchVideo = (settings: ShareSettings) => {
-  const id = getCurrentVideoId()
-  if (!id) {
-    return
-  }
-  fetchInfo(id).then(info => {
-    if (!info || !resolveTemplate(settings).includes('{cover_image}')) {
-      return
-    }
+const prefetchVideo = async (aid: string, settings: ShareSettings) => {
+  const info = await loadVideoInfo(aid)
+  if (info && resolveTemplate(settings).includes('{cover_image}')) {
     const maxWidth = settings.options.coverWidth
     getCoverSize(coverImageUrl(info.coverUrl, maxWidth), maxWidth)
-  })
-}
-
-const install = (settings: ShareSettings) => {
-  const controller = new AbortController()
-  const onClick = (event: MouseEvent) => handleShareClick(event, settings)
-  document.addEventListener('click', onClick, true)
-  urlChange(() => prefetchVideo(settings), { signal: controller.signal })
-  return () => {
-    controller.abort()
-    document.removeEventListener('click', onClick, true)
   }
 }
 
-let uninstall: (() => void) | null = null
-let currentSettings: ShareSettings | null = null
+let controller: AbortController | null = null
+let componentSettings: ShareSettings | null = null
 
-const entry: ComponentEntry<Options> = ({ settings }) => {
-  currentSettings = settings
-  uninstall?.()
-  uninstall = install(settings)
+const install = (settings: ShareSettings) => {
+  controller = new AbortController()
+  const { signal } = controller
+  document.addEventListener('click', event => handleShareClick(event, settings), {
+    capture: true,
+    signal,
+  })
+  videoChange(
+    ({ aid, cid }) => {
+      currentVideo = { aid: String(aid), cid: String(cid) }
+      prefetchVideo(currentVideo.aid, settings)
+    },
+    { signal },
+  )
 }
 
-const extraOptions = () =>
-  import('./extra-options/SettingsPanel.vue').then(module => module.default)
+const uninstall = () => {
+  controller?.abort()
+  controller = null
+  currentVideo = null
+}
+
+const entry: ComponentEntry<ShareCraftOptions> = ({ settings }) => {
+  componentSettings = settings
+  install(settings)
+}
 
 export const component = defineComponentMetadata({
   name: 'shareCraft',
@@ -492,23 +369,12 @@ export const component = defineComponentMetadata({
   ],
   tags: [componentsTags.utils],
   urlInclude: videoUrls,
-  instantStyles: [
-    {
-      name: 'hideSharePanel',
-      style: () => import('./hide-share-panel.scss'),
-    },
-  ],
   options,
-  extraOptions,
+  extraOptions: () => import('./extra-options/SettingsPanel.vue').then(m => m.default),
   entry,
   reload: () => {
-    if (currentSettings) {
-      uninstall?.()
-      uninstall = install(currentSettings)
-    }
+    uninstall()
+    install(componentSettings)
   },
-  unload: () => {
-    uninstall?.()
-    uninstall = null
-  },
+  unload: uninstall,
 })

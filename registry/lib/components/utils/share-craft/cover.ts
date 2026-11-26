@@ -1,13 +1,12 @@
+import { useScopedConsole } from '@/core/utils/log'
+
 export interface CoverSize {
   width: number
   height: number
 }
 
-const coverTtl = 30 * 60 * 1000
-const coverCacheLimit = 20
-
-const sizeCache = new Map<string, { size: CoverSize; time: number }>()
-const pendingSizes = new Map<string, Promise<CoverSize | null>>()
+const console = useScopedConsole('分享文案定制')
+const sizeRequests = new Map<string, Promise<CoverSize>>()
 
 /**
  * 图片链接交给聊天软件自己去取, 用 B 站图片 CDN 的缩放参数拿小图
@@ -26,48 +25,26 @@ const readSize = async (url: string, maxWidth: number): Promise<CoverSize> => {
     throw new Error(`HTTP ${response.status}`)
   }
   const bitmap = await createImageBitmap(await response.blob())
-  try {
-    const scale = Math.min(1, maxWidth / bitmap.width)
-    return {
-      width: Math.max(1, Math.round(bitmap.width * scale)),
-      height: Math.max(1, Math.round(bitmap.height * scale)),
-    }
-  } finally {
-    bitmap.close()
+  const scale = Math.min(1, maxWidth / bitmap.width)
+  const size = {
+    width: Math.round(bitmap.width * scale),
+    height: Math.round(bitmap.height * scale),
   }
+  bitmap.close()
+  return size
 }
 
-/** 获取封面显示尺寸, 失败时返回 null (调用方按 16:9 兜底) */
+/** 获取封面的显示尺寸, 读取失败时按 16:9 处理且不缓存 */
 export const getCoverSize = (imageUrl: string, maxWidth: number) => {
-  if (!imageUrl) {
-    return Promise.resolve<CoverSize | null>(null)
+  const cached = sizeRequests.get(imageUrl)
+  if (cached) {
+    return cached
   }
-  const cached = sizeCache.get(imageUrl)
-  if (cached && Date.now() - cached.time <= coverTtl) {
-    return Promise.resolve<CoverSize | null>(cached.size)
-  }
-  const pending = pendingSizes.get(imageUrl)
-  if (pending) {
-    return pending
-  }
-  const request = (async () => {
-    try {
-      const size = await readSize(imageUrl, maxWidth)
-      if (sizeCache.size >= coverCacheLimit) {
-        const oldestKey = sizeCache.keys().next().value
-        if (oldestKey !== undefined) {
-          sizeCache.delete(oldestKey)
-        }
-      }
-      sizeCache.set(imageUrl, { size, time: Date.now() })
-      return size
-    } catch (error) {
-      console.warn('[分享文案定制] 获取封面尺寸失败', error)
-      return null
-    } finally {
-      pendingSizes.delete(imageUrl)
-    }
-  })()
-  pendingSizes.set(imageUrl, request)
+  const request = readSize(imageUrl, maxWidth).catch(error => {
+    console.warn('获取封面尺寸失败', error)
+    sizeRequests.delete(imageUrl)
+    return { width: maxWidth, height: Math.round((maxWidth * 9) / 16) }
+  })
+  sizeRequests.set(imageUrl, request)
   return request
 }

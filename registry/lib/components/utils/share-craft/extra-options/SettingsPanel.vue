@@ -11,7 +11,6 @@
 
       <template v-if="isCustom">
         <TextArea
-          ref="areaRef"
           :text="draft.customTemplate"
           spellcheck="false"
           autocomplete="off"
@@ -20,7 +19,7 @@
           @change="draft.customTemplate = $event"
         />
         <div v-if="unknownVariables.length" class="share-craft-error">
-          未知变量 {{ unknownText }}，复制时会保留原文
+          未知变量 {{ unknownText }}，复制时只会复制视频链接
         </div>
       </template>
       <template v-else>
@@ -125,7 +124,7 @@
         <SwitchBox :checked="draft.showToast" @change="draft.showToast = $event" />
       </div>
       <div class="share-craft-hint">
-        只在视频页点击分享入口时生效，原生分享面板不会弹出，其他复制行为不受影响。
+        只在视频页点击分享按钮时生效，悬停弹出的原生分享面板仍可使用，其他复制行为不受影响。
       </div>
     </section>
 
@@ -139,9 +138,9 @@
 <script setup lang="ts">
 import { computed, onBeforeUnmount, reactive, ref } from 'vue'
 import { SwitchBox, TextArea, VButton, VDropdown, VSlider } from '@/ui'
-import { getComponentSettings, settings as globalSettings } from '@/core/settings'
+import { getComponentSettings } from '@/core/settings'
 import { Toast } from '@/core/toast'
-import type { ComponentMetadata } from '@/components/types'
+import type { ShareCraftOptions } from '..'
 import {
   CountFormat,
   DateFormat,
@@ -152,36 +151,21 @@ import {
   presetTemplates,
 } from '../templates'
 
-type ShareOptions = {
-  preset: Preset
-  customTemplate: string
-  dateFormat: DateFormat
-  durationFormat: DurationFormat
-  countFormat: CountFormat
-  descLength: number
-  showToast: boolean
-  coverWidth: number
-}
+const optionKeys = [
+  'preset',
+  'customTemplate',
+  'dateFormat',
+  'durationFormat',
+  'countFormat',
+  'descLength',
+  'showToast',
+  'coverWidth',
+] as const
 
-type TextAreaInstance = {
-  $refs?: {
-    input?: HTMLTextAreaElement
-  }
-}
+const { options } = getComponentSettings<ShareCraftOptions>('shareCraft')
 
-const props = defineProps<{ componentData?: ComponentMetadata }>()
-const settings = getComponentSettings<ShareOptions>(props.componentData?.name ?? 'shareCraft')
-
-const draft = reactive<ShareOptions>({
-  preset: settings.options.preset,
-  customTemplate: settings.options.customTemplate ?? '',
-  dateFormat: settings.options.dateFormat,
-  durationFormat: settings.options.durationFormat,
-  countFormat: settings.options.countFormat,
-  descLength: settings.options.descLength,
-  showToast: settings.options.showToast,
-  coverWidth: settings.options.coverWidth,
-})
+/** 面板里的修改先写入草稿, 点击「保存配置」才写回设置 */
+const draft = reactive(lodash.pick(options, optionKeys) as ShareCraftOptions)
 
 const presetItems = Object.values(Preset)
 const dateFormatItems = Object.values(DateFormat)
@@ -199,51 +183,19 @@ const descLengthText = computed(() =>
   draft.descLength === 0 ? '不截断' : `${draft.descLength} 字`,
 )
 
-const dirty = computed(() => {
-  const o = settings.options
-  return (
-    draft.preset !== o.preset ||
-    draft.customTemplate !== o.customTemplate ||
-    draft.dateFormat !== o.dateFormat ||
-    draft.durationFormat !== o.durationFormat ||
-    draft.countFormat !== o.countFormat ||
-    draft.descLength !== o.descLength ||
-    draft.showToast !== o.showToast ||
-    draft.coverWidth !== o.coverWidth
-  )
-})
+const dirty = computed(() => optionKeys.some(key => draft[key] !== options[key]))
 
-const areaRef = ref<TextAreaInstance | null>(null)
 const showSaved = ref(false)
 let savedTimer = 0
 
 const save = () => {
-  const input = areaRef.value?.$refs?.input
-  if (input) {
-    draft.customTemplate = input.value
-  }
-  const o = settings.options
-  o.preset = draft.preset
-  o.customTemplate = draft.customTemplate
-  o.dateFormat = draft.dateFormat
-  o.durationFormat = draft.durationFormat
-  o.countFormat = draft.countFormat
-  o.descLength = draft.descLength
-  o.showToast = draft.showToast
-  o.coverWidth = draft.coverWidth
-  try {
-    const { GM_setValue } = unsafeWindow.bilibiliEvolved.monkeyApis
-    GM_setValue('userComponents', globalSettings.userComponents)
-    showSaved.value = true
-    window.clearTimeout(savedTimer)
-    savedTimer = window.setTimeout(() => {
-      showSaved.value = false
-    }, 2500)
-    Toast.success('配置已保存', '分享文案定制', 2000)
-  } catch (error) {
-    console.error('[分享文案定制] 保存配置失败', error)
-    Toast.error('保存配置失败, 请重试', '分享文案定制', 3000)
-  }
+  Object.assign(options, draft)
+  showSaved.value = true
+  window.clearTimeout(savedTimer)
+  savedTimer = window.setTimeout(() => {
+    showSaved.value = false
+  }, 2500)
+  Toast.success('配置已保存', '分享文案定制', 2000)
 }
 
 onBeforeUnmount(() => window.clearTimeout(savedTimer))

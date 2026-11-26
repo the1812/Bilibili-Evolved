@@ -1,7 +1,0 @@
-// 视频页的分享面板是 hover 触发的 popover, 只拦截点击无法阻止它出现.
-// 组件启用期间直接隐藏, 点击分享入口只会执行组件的复制逻辑.
-.video-share-popover,
-.video-share-dropdown,
-.el-popover:has(.video-share-dropdown) {
-  display: none !important;
-}
