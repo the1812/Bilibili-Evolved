@@ -1,0 +1,317 @@
+import {
+  defineComponentMetadata,
+  defineOptionsMetadata,
+  OptionsOfMetadata,
+} from '@/components/define'
+import { waitForControlBar } from '@/components/live/live-control-bar'
+import { childListSubtree, urlChange, videoChange } from '@/core/observer'
+import { getComponentSettings } from '@/core/settings'
+import { select } from '@/core/spin-query'
+import { useScopedConsole } from '@/core/utils/log'
+import { allVideoUrls, liveUrls, matchCurrentPage } from '@/core/utils/urls'
+import { showPlayerTip } from '../common/player-tip/player-tip'
+import { createGainPanel, GainPanel } from './panel'
+import {
+  absoluteMaxGainPercent,
+  clampGainPercent,
+  defaultGainStep,
+  gainStepDecibel,
+  gainStepPercent,
+  GainStep,
+  maxGainPercent,
+  minGainPercent,
+  VolumeGain,
+} from './volume-gain'
+
+const name = 'volumeBoost'
+const buttonClass = 'be-volume-boost'
+
+const options = defineOptionsMetadata({
+  maxPercent: {
+    defaultValue: maxGainPercent,
+    displayName: `增益上限 (${minGainPercent}–${absoluteMaxGainPercent}%)`,
+    validator: (value: number) => {
+      const percent = Math.round(Number(value))
+      if (!Number.isFinite(percent) || percent < minGainPercent) {
+        // 返回 undefined 表示拒绝这次输入, 保留原来的值
+        return undefined
+      }
+      return Math.min(percent, absoluteMaxGainPercent)
+    },
+  },
+  stepMode: {
+    defaultValue: defaultGainStep.mode,
+    displayName: '滚轮每档的调节方式',
+    dropdownEnum: {
+      decibel: '按分贝 (听感等距)',
+      percent: '按百分比 (数值等距)',
+    },
+  },
+  stepDecibel: {
+    defaultValue: gainStepDecibel,
+    displayName: '每档增益 (dB, 仅按分贝调节时生效)',
+    slider: { min: 0.1, max: 3, step: 0.1 },
+  },
+  stepPercent: {
+    defaultValue: gainStepPercent,
+    displayName: '每档百分比 (%, 仅按百分比调节时生效)',
+    slider: { min: 1, max: 20, step: 1 },
+  },
+  records: {
+    defaultValue: {} as Record<string, number>,
+    hidden: true,
+  },
+  showTip: {
+    defaultValue: true,
+    displayName: '滚轮调节时显示提示',
+  },
+})
+export type Options = OptionsOfMetadata<typeof options>
+
+/** 读取直播间号, 直播页的记忆以直播间为单位 */
+const getLiveRoomId = () => document.URL.match(/live\.bilibili\.com\/(?:blanc\/)?(\d+)/)?.[1]
+
+const upLinkSelectors = [
+  '.up-info-container a[href*="space.bilibili.com/"]',
+  'a.up-name[href*="space.bilibili.com/"]',
+  '.up-info a[href*="space.bilibili.com/"]',
+  '#v_upinfo a[href*="space.bilibili.com/"]',
+]
+
+/**
+ * 记忆时使用的键: 视频页按 UP 主, 直播页按直播间, 两者互不影响.
+ * UP 主信息取不到时退回当前页面, 至少保证同一个页面内的记忆是有效的.
+ */
+const resolveRecordKey = async () => {
+  if (matchCurrentPage(liveUrls)) {
+    const roomId = getLiveRoomId()
+    return roomId ? `live/${roomId}` : null
+  }
+  const upLink = await select(
+    () => upLinkSelectors.map(selector => dq(selector)).find(it => it !== null) ?? null,
+    { maxRetry: 30, queryInterval: 400 },
+  )
+  const upId = upLink?.getAttribute('href')?.match(/space\.bilibili\.com\/(\d+)/)?.[1]
+  if (upId) {
+    return `up/${upId}`
+  }
+  const { aid } = unsafeWindow
+  return aid ? `aid/${aid}` : `page/${location.pathname}`
+}
+
+let teardown: () => void = () => undefined
+
+const setup = () => {
+  teardown()
+
+  const settings = getComponentSettings<Options>(name)
+  const console = useScopedConsole(name)
+  const isLivePage = matchCurrentPage(liveUrls)
+  /** 增益上限, 滑块顶部对应的百分比 */
+  const maxPercent = Math.round(
+    lodash.clamp(
+      Number(settings.options.maxPercent) || maxGainPercent,
+      minGainPercent,
+      absoluteMaxGainPercent,
+    ),
+  )
+  /** 滚轮每一档的调节方式, 按分贝时听感等距 */
+  const step: GainStep = {
+    mode: settings.options.stepMode === 'percent' ? 'percent' : defaultGainStep.mode,
+    decibel: lodash.clamp(Number(settings.options.stepDecibel) || gainStepDecibel, 0.1, 3),
+    percent: Math.round(
+      lodash.clamp(Number(settings.options.stepPercent) || gainStepPercent, 1, 20),
+    ),
+  }
+  const gain = new VolumeGain()
+  /** videoChange 和 urlChange 每注册一次就会多一个监听, 关闭组件时需要一并撤销 */
+  const abort = new AbortController()
+  let enabled = true
+  let panel: GainPanel | null = null
+  let recordKey: string | null = null
+  let stopObserver: (() => void) | null = null
+  /** 用户手动改过增益后, 就不再让异步读取到的记忆值覆盖它 */
+  let dirty = false
+  let restoreToken = 0
+
+  const findVideo = () => {
+    const video = dq(
+      '.bpx-player-video-wrap video, .bpx-player-video-area video, .live-player-mounter video, .live-player-ctnr video',
+    )
+    return video instanceof HTMLVideoElement ? video : null
+  }
+
+  const syncVideo = () => {
+    gain.setVideo(findVideo())
+  }
+
+  const remember = (percent: number) => {
+    if (!recordKey) {
+      return
+    }
+    const records = { ...settings.options.records }
+    if (percent > minGainPercent) {
+      records[recordKey] = percent
+    } else {
+      delete records[recordKey]
+    }
+    settings.options.records = records
+  }
+
+  const changePercent = (percent: number, source: 'drag' | 'wheel') => {
+    // 用户调低增益上限后, 当前值可能已经超出范围
+    const value = clampGainPercent(percent, maxPercent)
+    dirty = true
+    gain.setPercent(value)
+    remember(value)
+    // 直播页没有播放器中央的提示层, 只在视频页显示
+    if (source === 'wheel' && !isLivePage && settings.options.showTip) {
+      showPlayerTip(`${value}%`, 'mdi-volume-plus').catch(() => undefined)
+    }
+  }
+
+  /**
+   * 读取当前页面的记忆值并应用.
+   * 只有在页面上下文变化 (切换视频 / 直播) 时才调用, 因此可以放心地覆盖页面上已有的状态.
+   */
+  const restore = () => {
+    restoreToken += 1
+    const token = restoreToken
+    dirty = false
+    syncVideo()
+    resolveRecordKey()
+      .then(key => {
+        // UP 主信息可能还要等上一小会儿, 期间用户可能已经自己调过了
+        if (!enabled || token !== restoreToken || dirty) {
+          return
+        }
+        recordKey = key
+        const remembered = key ? settings.options.records[key] : undefined
+        const percent = clampGainPercent(remembered ?? minGainPercent, maxPercent)
+        if (remembered !== undefined && remembered !== percent) {
+          // 用户调低增益上限后, 记忆里超出上限的旧值顺手修剪掉
+          remember(percent)
+        }
+        gain.setPercent(percent)
+        panel?.setPercent(percent)
+      })
+      .catch(() => undefined)
+  }
+
+  const createPanel = (live = false) => {
+    panel?.dispose()
+    panel = createGainPanel({
+      percent: gain.getPercent(),
+      onChange: changePercent,
+      live,
+      maxPercent,
+      step,
+    })
+    return panel.element
+  }
+
+  /** 视频页: 插在原生音量按钮的左边 */
+  const insertVideoButton = () => {
+    if (!enabled) {
+      return
+    }
+    const volumeButton = dq('.bpx-player-ctrl-volume')
+    if (!volumeButton) {
+      return
+    }
+    const parent = volumeButton.parentElement
+    if (parent?.querySelector(`.${buttonClass}`)) {
+      return
+    }
+    volumeButton.insertAdjacentElement('beforebegin', createPanel())
+    restore()
+  }
+
+  /** 直播页: 插在直播控制栏的音量按钮后面 */
+  const insertLiveButton = (controlBar: Element) => {
+    if (!enabled) {
+      return
+    }
+    if (controlBar.querySelector(`.${buttonClass}`)) {
+      return
+    }
+    const volumeButton = dq(controlBar, '.volume')
+    if (!volumeButton) {
+      return
+    }
+    volumeButton.insertAdjacentElement('afterend', createPanel(true))
+    restore()
+  }
+
+  const watchVideoControlBar = async () => {
+    const container = await select(
+      () => dq('.bpx-player-container') ?? dq('.bpx-player-control-wrap'),
+      { maxRetry: 30, queryInterval: 400 },
+    )
+    if (!enabled) {
+      return
+    }
+    if (!container) {
+      console.warn('没有找到播放器, 音量增益的滑块无法插入')
+      return
+    }
+    const [observer] = childListSubtree(container, () => {
+      if (!enabled) {
+        return
+      }
+      insertVideoButton()
+      syncVideo()
+    })
+    stopObserver = () => observer.disconnect()
+  }
+
+  if (isLivePage) {
+    waitForControlBar({ callback: insertLiveButton })
+  } else {
+    watchVideoControlBar()
+  }
+
+  videoChange(
+    () => {
+      if (enabled) {
+        restore()
+      }
+    },
+    { signal: abort.signal },
+  )
+
+  urlChange(
+    () => {
+      if (enabled) {
+        restore()
+      }
+    },
+    { signal: abort.signal },
+  )
+
+  teardown = () => {
+    enabled = false
+    abort.abort()
+    stopObserver?.()
+    stopObserver = null
+    panel?.dispose()
+    panel = null
+    gain.dispose()
+  }
+}
+
+export const component = defineComponentMetadata({
+  name,
+  displayName: '音量增益',
+  instantStyles: [{ name, style: () => import('./volume-boost.scss') }],
+  tags: [componentsTags.video, componentsTags.live],
+  urlInclude: [...allVideoUrls, ...liveUrls],
+  options,
+  entry: setup,
+  reload: setup,
+  unload: () => teardown(),
+  author: {
+    name: 'Swithin157',
+    link: 'https://github.com/Swithin157',
+  },
+})
