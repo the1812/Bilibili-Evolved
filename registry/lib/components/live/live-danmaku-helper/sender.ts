@@ -135,11 +135,24 @@ const sendByDom = async (text: string) => {
     return false
   }
   setNativeValue(input, text)
-  await delay(100)
 
-  const sendButton = dqa(liveSendButtonSelector).find(
-    (button): button is HTMLButtonElement =>
-      isVisible(button) && !(button as HTMLButtonElement).disabled,
+  const inputContainer = input.closest<HTMLElement>('.chat-input-ctnr')
+  const sendButton = await select<HTMLElement>(
+    () => {
+      const dynamicSendButton = inputContainer?.querySelector<HTMLElement>('.send-btn-wrapper')
+      if (dynamicSendButton && isVisible(dynamicSendButton)) {
+        return dynamicSendButton
+      }
+      return (
+        dqa(liveSendButtonSelector).find(
+          (button): button is HTMLElement =>
+            isVisible(button) &&
+            !(button instanceof HTMLButtonElement && button.disabled) &&
+            button.getAttribute('aria-disabled') !== 'true',
+        ) ?? null
+      )
+    },
+    { maxRetry: 10, queryInterval: 100 },
   )
   if (!sendButton) {
     return false
