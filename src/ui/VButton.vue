@@ -6,8 +6,8 @@
     :tabindex="disabled ? -1 : 0"
     :class="{ [type]: true, disabled, round, icon, 'no-effects': noEffects }"
     v-on="disabled ? null : $listeners"
-    @keydown.enter.prevent="$emit('click', $event)"
-    @keydown.space.prevent="$emit('click', $event)"
+    @keydown.enter.prevent="handleKeydown"
+    @keydown.space.prevent="handleKeydown"
   >
     <div class="content-container">
       <slot>Button</slot>
@@ -39,6 +39,14 @@ export default Vue.extend({
   computed: {
     disabled() {
       return Boolean(this.$attrs.disabled)
+    },
+  },
+  methods: {
+    handleKeydown(event: KeyboardEvent) {
+      if (this.disabled || event.repeat) {
+        return
+      }
+      this.$emit('click', event)
     },
   },
 })

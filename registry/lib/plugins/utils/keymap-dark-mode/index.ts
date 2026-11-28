@@ -11,6 +11,7 @@ export const plugin: PluginMetadata = {
         run: () => {
           const darkMode = settings.getComponentSettings('darkMode')
           darkMode.enabled = !darkMode.enabled
+          return true
         },
       }
     })

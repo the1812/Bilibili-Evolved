@@ -125,6 +125,7 @@ export default Vue.extend({
   .row-preset-binding {
     @include single-line();
     @include no-scrollbar();
+    overscroll-behavior: auto;
     &.not-set,
     &.overwritten {
       opacity: 0.25;

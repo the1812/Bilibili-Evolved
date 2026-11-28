@@ -9,6 +9,7 @@ export const plugin: PluginMetadata = {
       actions.empty = {
         displayName: '无动作',
         prevent: true,
+        allowRepeat: true,
         run: none,
       }
     })

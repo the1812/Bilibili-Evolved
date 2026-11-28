@@ -26,7 +26,9 @@ export const initVue = () => {
         el.addEventListener('keydown', e => {
           if (e.key === 'Enter' || e.key === ' ') {
             e.preventDefault()
-            wrapper(e)
+            if (!e.repeat) {
+              wrapper(e)
+            }
           }
         })
       }

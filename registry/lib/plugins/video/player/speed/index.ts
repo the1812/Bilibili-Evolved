@@ -26,12 +26,24 @@ export const plugin: PluginMetadata = {
     link: 'https://github.com/LonelySteve',
   },
   setup: ({ addData, addHook }) => {
+    let running = false
     const videoSpeedAction =
       (cb: (context: SpeedContext) => Promise<unknown> | unknown) =>
       async (context: KeyBindingActionContext) => {
-        const speedContext = await getSpeedContext()
-        await cb(speedContext)
-        context.showTip(formatSpeedText(speedContext.videoElement.playbackRate), 'mdi-fast-forward')
+        if (running) {
+          return true
+        }
+        running = true
+        try {
+          const speedContext = await getSpeedContext()
+          await cb(speedContext)
+          context.showTip(
+            formatSpeedText(speedContext.videoElement.playbackRate),
+            'mdi-fast-forward',
+          )
+        } finally {
+          running = false
+        }
         return true
       }
 
@@ -40,10 +52,12 @@ export const plugin: PluginMetadata = {
       Object.assign(actions, {
         videoSpeedIncrease: {
           displayName: '提高倍速',
+          allowRepeat: true,
           run: videoSpeedAction(({ increase }) => increase()),
         },
         videoSpeedDecrease: {
           displayName: '降低倍速',
+          allowRepeat: true,
           run: videoSpeedAction(({ decrease }) => decrease()),
         },
         videoSpeedToggle: {
@@ -75,30 +89,27 @@ export const plugin: PluginMetadata = {
         addData('keymap.actions', (actions: Record<string, KeyBindingAction>) => {
           actions.videoSpeedForget = {
             displayName: '清除倍速记忆',
-            run: lodash.debounce(
-              videoSpeedAction(async () => {
-                if (!component.settings.enabled) {
-                  Toast.error(
-                    '组件已禁用，不能清除当前视频倍速记忆值',
-                    component.metadata.displayName,
-                    5000,
-                  )
-                  return
-                }
-                if (!component.usesRbvp() && !component.options.individualRemember) {
-                  Toast.error(
-                    '选项「各视频分别记忆」已禁用，且当前未启用 RBVP 接管，不能清除当前视频倍速记忆值',
-                    component.metadata.displayName,
-                    5000,
-                  )
-                  return
-                }
-                component.forgetSpeed()
-                await component.resetVideoSpeed()
-                Toast.success('已清除当前视频倍速记忆值', component.metadata.displayName, 3000)
-              }),
-              200,
-            ),
+            run: videoSpeedAction(async () => {
+              if (!component.settings.enabled) {
+                Toast.error(
+                  '组件已禁用，不能清除当前视频倍速记忆值',
+                  component.metadata.displayName,
+                  5000,
+                )
+                return
+              }
+              if (!component.usesRbvp() && !component.options.individualRemember) {
+                Toast.error(
+                  '选项「各视频分别记忆」已禁用，且当前未启用 RBVP 接管，不能清除当前视频倍速记忆值',
+                  component.metadata.displayName,
+                  5000,
+                )
+                return
+              }
+              component.forgetSpeed()
+              await component.resetVideoSpeed()
+              Toast.success('已清除当前视频倍速记忆值', component.metadata.displayName, 3000)
+            }),
           }
         })
         addData('keymap.presets', (presetBase: Record<string, string>) => {

@@ -107,6 +107,8 @@ defineExpose({
   font-size: 12px;
   display: flex;
   flex-direction: column;
+  overflow: hidden;
+  overscroll-behavior: contain;
   padding: 12px 12px 0 18px;
 
   &-header {
