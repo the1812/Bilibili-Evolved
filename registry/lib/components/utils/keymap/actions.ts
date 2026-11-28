@@ -218,6 +218,9 @@ export const builtInActions: Record<string, KeyBindingAction> = {
         if (timer !== null || originalPlaybackRate !== null) {
           return true
         }
+        if (!playerAgent.nativeApi || !playerAgent.query.video.element.sync()) {
+          return null
+        }
         event.onRelease(({ cancelled }) => {
           const isShortPress = timer !== null
           reset()
